@@ -25,13 +25,20 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.jaredholdcroft.java</groupId>
-    <artifactId>postmark-java</artifactId>
-    <version>1.0</version>
+    <parent>
+        <groupId>org.sonatype.oss</groupId>
+        <artifactId>oss-parent</artifactId>
+        <version>7</version>
+    </parent>
+
+    <groupId>de.grobmeier</groupId>
+    <artifactId>postmark4j</artifactId>
+    <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
-    <name>postmark-java</name>
-    <url>https://github.com/jaredholdcroft/postmark-java</url>
-    <description>Java API for sending E-Mails via Postmarkapp</description>
+
+    <name>postmark4j</name>
+    <url>https://github.com/grobmeier/postmark4j</url>
+    <description>Java API for sending E-Mails via Postmarkapp. Forked from Jared Holdcroft and repackaged for Maven Central.</description>
     <licenses>
         <license>
             <name>MIT License</name>
@@ -40,24 +47,24 @@
         </license>
     </licenses>
     <scm>
-        <url>https://github.com/jaredholdcroft/postmark-java</url>
-        <connection>scm:git:git://github.com/jaredholdcroft/postmark-java.git</connection>
-        <developerConnection>scm:git:git@github.com:jaredholdcroft/postmark-java.git</developerConnection>
+        <url>https://github.com/grobmeier/postmark4j</url>
+        <connection>scm:git:git://github.com/grobmeier/postmark4j.git</connection>
+        <developerConnection>scm:git:git@github.com:grobmeier/postmark4j.git</developerConnection>
     </scm>
     <developers>
         <developer>
-            <email>jared@theholdcrofts.com</email>
-            <name>Jared Holdcroft</name>
-            <url>https://github.com/jaredholdcroft</url>
             <id>jaredholdcroft</id>
+            <name>Jared Holdcroft</name>
+            <email>jared@theholdcrofts.com</email>
+            <url>https://github.com/jaredholdcroft</url>
+        </developer>
+        <developer>
+            <id>grobmeier</id>
+            <name>Christian Grobmeier</name>
+            <email>grobmeier@gmail.com</email>
+            <url>https://github.com/grobmeier</url>
         </developer>
     </developers>
-
-    <parent>
-        <groupId>org.sonatype.oss</groupId>
-        <artifactId>oss-parent</artifactId>
-        <version>7</version>
-    </parent>
 
     <build>
         <plugins>
@@ -80,6 +87,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
+                <version>2.4</version>
                 <executions>
                     <execution>
                         <id>attach-sources</id>
