@@ -22,11 +22,6 @@
 
 package de.grobmeier.postmark;
 
-import de.grobmeier.postmark.NameValuePair;
-import de.grobmeier.postmark.PostmarkClient;
-import de.grobmeier.postmark.PostmarkException;
-import de.grobmeier.postmark.PostmarkMessage;
-
 import java.util.*;
 
 /**
