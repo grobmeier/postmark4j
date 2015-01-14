@@ -20,10 +20,14 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-package com.postmark.java;
+package de.grobmeier.postmark;
 
-import com.google.gson.ExclusionStrategy;
-import com.google.gson.FieldAttributes;
+import de.grobmeier.postmark.NameValuePair;
+import de.grobmeier.postmark.PostmarkClient;
+import de.grobmeier.postmark.PostmarkException;
+import de.grobmeier.postmark.PostmarkMessage;
+
+import java.util.*;
 
 /**
  * Postmark for Java
@@ -33,19 +37,37 @@ import com.google.gson.FieldAttributes;
  * http://github.com/jaredholdcroft/postmark-java
  */
 
-public class SkipMeExclusionStrategy implements ExclusionStrategy {
-    private final Class<?> typeToSkip;
+public class TestClient {
 
-    public SkipMeExclusionStrategy(Class<?> typeToSkip) {
-        this.typeToSkip = typeToSkip;
-    }
+    public static void main(String[] args)
+    {
+        List<NameValuePair> headers = new ArrayList<NameValuePair>();
 
-    public boolean shouldSkipClass(Class<?> clazz) {
-        return (clazz == typeToSkip);
-    }
+        headers.add(new NameValuePair("HEADER", "test"));
 
-    public boolean shouldSkipField(FieldAttributes f) {
-        return f.getAnnotation(SkipMe.class) != null;
+        PostmarkMessage message = new PostmarkMessage(args[0],
+                args[1],
+                args[0],
+                args[2],
+                args[3],
+                args[4],
+                args[5],
+                false,
+                args[6],
+                headers);
+
+
+        String apiKey = "POSTMARK_API_TEST";
+        if(args[7] != null)
+            apiKey = args[7];
+            
+
+        PostmarkClient client = new PostmarkClient(apiKey);
+
+        try {
+            client.sendMessage(message);
+        } catch (PostmarkException pe) {
+            System.out.println("An error has occurred : " + pe.getMessage());
+        }
     }
 }
-

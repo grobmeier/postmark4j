@@ -20,7 +20,10 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-package com.postmark.java;
+package de.grobmeier.postmark;
+
+import com.google.gson.ExclusionStrategy;
+import com.google.gson.FieldAttributes;
 
 /**
  * Postmark for Java
@@ -30,28 +33,19 @@ package com.postmark.java;
  * http://github.com/jaredholdcroft/postmark-java
  */
 
-public class PostmarkException extends Exception {
+public class SkipMeExclusionStrategy implements ExclusionStrategy {
+    private final Class<?> typeToSkip;
 
-    private static final long serialVersionUID = 8742554283535762204L;
-
-    private PostmarkResponse response;
-
-    public PostmarkException(Throwable cause) {
-        super(cause);
+    public SkipMeExclusionStrategy(Class<?> typeToSkip) {
+        this.typeToSkip = typeToSkip;
     }
 
-    public PostmarkException(String message) {
-        super(message);
+    public boolean shouldSkipClass(Class<?> clazz) {
+        return (clazz == typeToSkip);
     }
 
-    public PostmarkException(String message, PostmarkResponse response) {
-        super(message);
-
-        this.response = response;
-    }
-
-    public PostmarkResponse getResponse()
-    {
-        return response;
+    public boolean shouldSkipField(FieldAttributes f) {
+        return f.getAnnotation(SkipMe.class) != null;
     }
 }
+

@@ -20,7 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-package com.postmark.java;
+package de.grobmeier.postmark;
 
 /**
  * Attachment for a message.<p/>

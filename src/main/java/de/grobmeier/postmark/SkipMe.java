@@ -20,12 +20,12 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-package com.postmark.java;
+package de.grobmeier.postmark;
 
-import com.google.gson.*;
-import org.joda.time.DateTime;
-
-import java.lang.reflect.Type;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
 /**
  * Postmark for Java
@@ -35,13 +35,8 @@ import java.lang.reflect.Type;
  * http://github.com/jaredholdcroft/postmark-java
  */
 
-public class DateTimeTypeAdapter implements JsonSerializer<DateTime>, JsonDeserializer<DateTime> {
-    public JsonElement serialize(DateTime src, Type typeOfSrc, JsonSerializationContext context) {
-        return new JsonPrimitive(src.toString());
-    }
-
-    public DateTime deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
-            throws JsonParseException {
-        return new DateTime(json.getAsJsonPrimitive().getAsString());
-    }
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ElementType.FIELD})
+public @interface SkipMe {
+    // Field tag only annotation
 }

@@ -20,7 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-package com.postmark.java;
+package de.grobmeier.postmark;
 
 /**
  * Postmark for Java
@@ -30,54 +30,28 @@ package com.postmark.java;
  * http://github.com/jaredholdcroft/postmark-java
  */
 
-// Simple class to represent a HTTP header name/value pair
-public class NameValuePair {
+public class PostmarkException extends Exception {
 
-    private String name;
-    private String value;
+    private static final long serialVersionUID = 8742554283535762204L;
 
-    public NameValuePair(String name, String value) {
-        this.name = name;
-        this.value = value;
+    private PostmarkResponse response;
+
+    public PostmarkException(Throwable cause) {
+        super(cause);
     }
 
-    public String getName() {
-        return name;
+    public PostmarkException(String message) {
+        super(message);
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public PostmarkException(String message, PostmarkResponse response) {
+        super(message);
+
+        this.response = response;
     }
 
-    public String getValue() {
-        return value;
-    }
-
-    public void setValue(String value) {
-        this.value = value;
-    }
-
-    public String toString() {
-        return name + " : " + value;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        NameValuePair that = (NameValuePair) o;
-
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
-        if (value != null ? !value.equals(that.value) : that.value != null) return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = name != null ? name.hashCode() : 0;
-        result = 31 * result + (value != null ? value.hashCode() : 0);
-        return result;
+    public PostmarkResponse getResponse()
+    {
+        return response;
     }
 }
