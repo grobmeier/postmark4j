@@ -22,6 +22,8 @@
 
 package com.postmark.java;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Attachment for a message.<p/>
  * Sample code:
@@ -47,9 +49,14 @@ package com.postmark.java;
  * </pre>
  */
 public class Attachment {
+	@SerializedName("Name")
 	private String name;
+	@SerializedName("ContentType")
 	private String contentType;
+	@SerializedName("Content")
 	private String content;
+	@SerializedName("ContentID")
+	private String contentID;
 
 	public String getName() {
 		return name;
@@ -73,6 +80,14 @@ public class Attachment {
 
 	public void setContent(String content) {
 		this.content = content;
+	}
+
+	public String getContentID() {
+		return contentID;
+	}
+
+	public void setContentID(String contentID) {
+		this.contentID = contentID;
 	}
 
 	@Override
