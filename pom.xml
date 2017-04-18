@@ -33,7 +33,7 @@
 
     <groupId>de.grobmeier</groupId>
     <artifactId>postmark4j</artifactId>
-    <version>1.1.1-SNAPSHOT</version>
+    <version>1.1.1</version>
     <packaging>jar</packaging>
 
     <name>postmark4j</name>
@@ -50,7 +50,8 @@
         <url>https://github.com/grobmeier/postmark4j</url>
         <connection>scm:git:git://github.com/grobmeier/postmark4j.git</connection>
         <developerConnection>scm:git:git@github.com:grobmeier/postmark4j.git</developerConnection>
-    </scm>
+      <tag>postmark4j-1.1.1</tag>
+  </scm>
     <developers>
         <developer>
             <id>jaredholdcroft</id>
