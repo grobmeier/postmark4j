@@ -45,4 +45,4 @@
  * @see <a href="http://jaredholdcroft.github.io/postmark-java/"/>Documentation on GitHub</a>
  * @see <a href="http://developer.postmarkapp.com/">Postmark API documentation</a>
  */
-package com.postmark.java;
+package de.grobmeier.postmark;

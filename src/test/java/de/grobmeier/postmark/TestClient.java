@@ -24,17 +24,10 @@ package de.grobmeier.postmark;
 
 import java.util.*;
 
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 
 import com.google.gson.annotations.SerializedName;
 
-import static org.hamcrest.Matchers.*;
 /**
  * Command-line test client.
  */

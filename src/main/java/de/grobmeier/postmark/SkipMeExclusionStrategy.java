@@ -27,7 +27,7 @@ import com.google.gson.FieldAttributes;
 
 /**
  * A Gson {@link com.google.gson.ExclusionStrategy} to omit fields marked with
- * the {@link com.postmark.java.SkipMe} annotation from serialization.
+ * the {@link de.grobmeier.postmark.SkipMe} annotation from serialization.
  */
 
 public class SkipMeExclusionStrategy implements ExclusionStrategy {

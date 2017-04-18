@@ -1,4 +1,4 @@
-package com.postmark.java;
+package de.grobmeier.postmark;
 
 /**
  * Postmark for Java
