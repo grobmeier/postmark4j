@@ -24,34 +24,35 @@ package de.grobmeier.postmark;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.HttpResponseException;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
 import org.joda.time.DateTime;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Scanner;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Postmark for Java
- * <p/>
- * This library can be used to leverage the postmarkapp.com functionality from a Java client
- * <p/>
- *
- * @see <a href="http://github.com/jaredholdcroft/postmark-java"/>
+ * Class that does the heavy lifting
  */
-
-// Class that does the heavy lifting
 public class PostmarkClient {
+
+    public static final String API_ENDPOINT = "https://api.postmarkapp.com";
 
     private static Logger logger = Logger.getLogger("com.postmark.java");
     private String serverToken;
+    private String serverPath;
 
     private static GsonBuilder gsonBuilder = new GsonBuilder();
 
@@ -75,9 +76,21 @@ public class PostmarkClient {
      * @param serverToken the postmark server token
      */
     public PostmarkClient(String serverToken) {
+        this(serverToken, API_ENDPOINT);
+    }
 
+    /**
+     * Initializes a new instance of the PostmarkClient class.
+     * <p/>
+     * If you do not have a server token you can request one by signing up to
+     * use Postmark: http://postmarkapp.com.
+     *
+     * @param serverToken the postmark server token
+     * @param serverPath an alternative server path e.g https://api.postmarkapp.com
+     */
+    public PostmarkClient(String serverToken, String serverPath) {
         this.serverToken = serverToken;
-
+        this.serverPath = serverPath;
     }
 
     /**
@@ -148,6 +161,20 @@ public class PostmarkClient {
     }
 
     /**
+     * Sends a template message through the Postmark API.
+     * All email addresses must be valid, and the sender must be
+     * a valid sender signature according to Postmark. To obtain a valid
+     * sender signature, log in to Postmark and navigate to:
+     * http://postmarkapp.com/signatures.
+     *
+     * @param templateMessage A prepared template message instance.</param>
+     * @return A response object
+     */
+    public PostmarkResponse sendMessage(PostmarkTemplate templateMessage) throws PostmarkException {
+        return sendPostmarkMessage("/email/withTemplate", templateMessage);
+    }
+
+    /**
      * Sends a message through the Postmark API.
      * All email addresses must be valid, and the sender must be
      * a valid sender signature according to Postmark. To obtain a valid
@@ -158,6 +185,10 @@ public class PostmarkClient {
      * @return A response object
      */
     public PostmarkResponse sendMessage(PostmarkMessage message) throws PostmarkException {
+        return sendPostmarkMessage("/email", message);
+    }
+
+    private PostmarkResponse sendPostmarkMessage(String endpoint, PostmarkMessageBase message ) throws PostmarkException {
 
         HttpClient httpClient = new DefaultHttpClient();
         PostmarkResponse theResponse = new PostmarkResponse();
@@ -165,7 +196,7 @@ public class PostmarkClient {
         try {
 
             // Create post request to Postmark API endpoint
-            HttpPost method = new HttpPost("http://api.postmarkapp.com/email");
+            HttpPost method = new HttpPost(serverPath+endpoint);
 
             // Add standard headers required by Postmark
             method.addHeader("Accept", "application/json");
@@ -186,8 +217,25 @@ public class PostmarkClient {
             StringEntity payload = new StringEntity(messageContents, "UTF-8");
             method.setEntity(payload);
 
+            ResponseHandler<String> responseHandler = new ResponseHandler<String>() {
 
-            ResponseHandler<String> responseHandler = new BasicResponseHandler();
+                @Override
+                public String handleResponse(
+                        final HttpResponse response) throws IOException {
+                    int status = response.getStatusLine().getStatusCode();
+                    HttpEntity entity = response.getEntity();
+                    if (status >= 200 && status < 300) {
+                        return entity != null ? EntityUtils.toString(entity) : null;
+                    } else {
+                        Scanner s = new Scanner(entity.getContent()).useDelimiter("\\A");
+                        String result = s.hasNext() ? s.next() : "";
+                        // Output body in case of trouble for further debugging
+                        logger.warning(result);
+
+                        throw new ClientProtocolException("Unexpected response status: " + status);
+                    }
+                }
+            };
 
             try {
                 String response = httpClient.execute(method, responseHandler);
@@ -196,6 +244,7 @@ public class PostmarkClient {
                 theResponse.status = PostmarkStatus.SUCCESS;
             } catch (HttpResponseException hre) {
                 switch(hre.getStatusCode()) {
+
                     case 401:
                     case 422:
                         logger.log(Level.SEVERE, "There was a problem with the email: " + hre.getMessage());
@@ -212,11 +261,13 @@ public class PostmarkClient {
                         theResponse.status = PostmarkStatus.UNKNOWN;
                         theResponse.setMessage(hre.getMessage());
                         throw new PostmarkException(hre.getMessage(), theResponse);
-
                 }
             }
 
-
+        } catch (PostmarkException e) {
+            //Log it and rethrow it, don't wrap it
+            logger.log(Level.SEVERE, "There has been an error sending your email: " + e.getMessage());
+            throw e;
         } catch (Exception e) {
             logger.log(Level.SEVERE, "There has been an error sending your email: " + e.getMessage());
             throw new PostmarkException(e);
@@ -228,6 +279,4 @@ public class PostmarkClient {
 
         return theResponse;
     }
-
-
 }

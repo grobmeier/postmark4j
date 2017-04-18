@@ -26,41 +26,48 @@ import com.google.gson.annotations.SerializedName;
 import org.joda.time.DateTime;
 
 /**
- * Postmark for Java
- * <p/>
- * This library can be used to leverage the postmarkapp.com functionality from a Java client
- * <p/>
- * http://github.com/jaredholdcroft/postmark-java
+ * Class that wraps the Postmark response
  */
-
-// Enum of possible response statuses
-enum PostmarkStatus {
-    UNKNOWN, SUCCESS, USERERROR, SERVERERROR
-}
-
-// Class that wraps the Postmark response
 
 public class PostmarkResponse {
 
-    // The status outcome of the response.
+    /**
+     * The status outcome of the response.
+     */
     @SerializedName("Status")
     public PostmarkStatus status;
 
-    // The message from the API.
-    // In the event of an error, this message may contain helpful text.
+    /**
+     * The message from the API.
+     * In the event of an error, this message may contain helpful text.
+     */
     @SerializedName("Message")
     public String message;
 
-    // The time the request was received by Postmark.
+    /**
+     * The message ID of the sent message.
+     * This may be used to identify the message to other API endpoints not yet
+     * supported here.
+     */
+    @SerializedName("MessageID")
+    public String messageId;
+
+    /**
+     * The time the request was received by Postmark.
+     */
     @SerializedName("SubmittedAt")
     public DateTime submittedAt;
 
-    // The recipient of the submitted request.
+    /**
+     * The recipient of the submitted request.
+     */
     @SerializedName("To")
     public String to;
 
-    // The error code returned from Postmark.
-    // This does not map to HTTP status codes.
+    /**
+     * The error code returned from Postmark.
+     * This does not map to HTTP status codes.
+     */
     @SerializedName("ErrorCode")
     public int errorCode;
 
@@ -102,5 +109,19 @@ public class PostmarkResponse {
 
     public void setErrorCode(int errorCode) {
         this.errorCode = errorCode;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder();
+        sb.append("PostmarkResponse");
+        sb.append("{ status=").append(status);
+        sb.append(", to='").append(to).append('\'');
+        sb.append(", submittedAt='").append(submittedAt).append('\'');
+        sb.append(", messageId='").append(messageId).append('\'');
+        sb.append(", errorCode=").append(errorCode);
+        sb.append(", message='").append(message).append('\'');
+        sb.append('}');
+        return sb.toString();
     }
 }

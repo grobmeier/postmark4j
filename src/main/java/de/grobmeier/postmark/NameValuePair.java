@@ -23,14 +23,8 @@
 package de.grobmeier.postmark;
 
 /**
- * Postmark for Java
- * <p/>
- * This library can be used to leverage the postmarkapp.com functionality from a Java client
- * <p/>
- * http://github.com/jaredholdcroft/postmark-java
+ * Simple class to represent a HTTP header name/value pair.
  */
-
-// Simple class to represent a HTTP header name/value pair
 public class NameValuePair {
 
     private String name;
