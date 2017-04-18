@@ -1,9 +1,24 @@
-README
-======
+# postmark4j
 
-This library allows you to leverage the Postmark REST API to send emails.
+postmark4j is a community driven effort to work with the Postmarkapp REST API.
+It was initially created by Jared Holdcroft.
 
-Example usage:
+Please note, this project does not support the full API, only the most important
+aspects as sending emails. If you need something done, feel free to send a PR.
+
+## Installation
+
+It's best to install it using Maven:
+
+```
+<dependency>
+  <groupId>de.grobmeier</groupId>
+  <artifactId>postmark4j</artifactId>
+  <version>1.1.1</version>
+</dependency>
+```
+
+## Example usage
 
 ```java
 List<NameValuePair> headers = new ArrayList<NameValuePair>();
