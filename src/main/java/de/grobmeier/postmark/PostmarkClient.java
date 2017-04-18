@@ -69,7 +69,7 @@ public class PostmarkClient {
 
     /**
      * Initializes a new instance of the PostmarkClient class.
-     * <p/>
+     *
      * If you do not have a server token you can request one by signing up to
      * use Postmark: http://postmarkapp.com.
      *
@@ -81,7 +81,7 @@ public class PostmarkClient {
 
     /**
      * Initializes a new instance of the PostmarkClient class.
-     * <p/>
+     *
      * If you do not have a server token you can request one by signing up to
      * use Postmark: http://postmarkapp.com.
      *
@@ -109,6 +109,7 @@ public class PostmarkClient {
      * @param isHTML  Is the body text HTML
      * @param tag     A tag to identify the message in postmark
      * @return {@link PostmarkResponse} with details about the transaction
+     * @throws PostmarkException when something goes wrong
      */
     public PostmarkResponse sendMessage(String from, String to, String replyTo, String cc, String subject, String body, boolean isHTML, String tag) throws PostmarkException {
         return sendMessage(from, to, replyTo, cc, null, subject, body, isHTML, tag, null);
@@ -131,6 +132,7 @@ public class PostmarkClient {
      * @param tag     A tag to identify the message in postmark
      * @param headers A collection of additional mail headers to send with the message
      * @return {@link PostmarkResponse} with details about the transaction
+     * @throws PostmarkException when something goes wrong
      */
     public PostmarkResponse sendMessage(String from, String to, String replyTo, String cc, String subject, String body, boolean isHTML, String tag, List<NameValuePair> headers) throws PostmarkException {
         return sendMessage(from, to, replyTo, cc, null, subject, body, isHTML, tag, headers);
@@ -154,6 +156,7 @@ public class PostmarkClient {
      * @param tag     A tag to identify the message in postmark
      * @param headers A collection of additional mail headers to send with the message
      * @return {@link PostmarkResponse} with details about the transaction
+     * @throws PostmarkException when something goes wrong
      */
     public PostmarkResponse sendMessage(String from, String to, String replyTo, String cc, String bcc, String subject, String body, boolean isHTML, String tag, List<NameValuePair> headers) throws PostmarkException {
         PostmarkMessage message = new PostmarkMessage(from, to, replyTo, subject, bcc, cc, body, isHTML, tag, headers);
@@ -167,8 +170,9 @@ public class PostmarkClient {
      * sender signature, log in to Postmark and navigate to:
      * http://postmarkapp.com/signatures.
      *
-     * @param templateMessage A prepared template message instance.</param>
+     * @param templateMessage A prepared template message instance.
      * @return A response object
+     * @throws PostmarkException when something goes wrong
      */
     public PostmarkResponse sendMessage(PostmarkTemplate templateMessage) throws PostmarkException {
         return sendPostmarkMessage("/email/withTemplate", templateMessage);
@@ -181,8 +185,9 @@ public class PostmarkClient {
      * sender signature, log in to Postmark and navigate to:
      * http://postmarkapp.com/signatures.
      *
-     * @param message A prepared message instance.</param>
+     * @param message A prepared message instance.
      * @return A response object
+     * @throws PostmarkException when something goes wrong
      */
     public PostmarkResponse sendMessage(PostmarkMessage message) throws PostmarkException {
         return sendPostmarkMessage("/email", message);

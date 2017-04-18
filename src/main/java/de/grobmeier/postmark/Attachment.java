@@ -25,7 +25,8 @@ package de.grobmeier.postmark;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * Attachment for a message.<p/>
+ * Attachment for a message.
+ *
  * Sample code:
  * <pre>
  * {@code

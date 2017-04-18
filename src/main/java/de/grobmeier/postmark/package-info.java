@@ -42,7 +42,7 @@
  * </ul>
  *
  * @see <a href="http://postmarkapp.com/">Postmark</a>
- * @see <a href="http://jaredholdcroft.github.io/postmark-java/"/>Documentation on GitHub</a>
+ * @see <a href="http://jaredholdcroft.github.io/postmark-java/">Documentation on GitHub</a>
  * @see <a href="http://developer.postmarkapp.com/">Postmark API documentation</a>
  */
 package de.grobmeier.postmark;
