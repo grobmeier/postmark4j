@@ -64,6 +64,16 @@
             <email>grobmeier@gmail.com</email>
             <url>https://github.com/grobmeier</url>
         </developer>
+        <developer>
+            <id>rupW</id>
+            <name>Rupert Wood</name>
+            <url>https://github.com/RupW</url>
+        </developer>
+        <developer>
+            <id>micheal-swiggs</id>
+            <name>Micheal Swiggs</name>
+            <url>https://github.com/micheal-swiggs</url>
+        </developer>
     </developers>
 
     <build>
