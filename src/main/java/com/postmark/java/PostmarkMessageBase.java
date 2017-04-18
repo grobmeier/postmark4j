@@ -231,6 +231,12 @@ public class PostmarkMessageBase {
         this.attachments = attachments;
     }
 
+    public void addAttachment(Attachment attachment) {
+        if (attachments == null) {
+            attachments = new ArrayList<Attachment>();
+        }
+        attachments.add(attachment);
+    }
 }
 
 
