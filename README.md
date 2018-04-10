@@ -1,5 +1,7 @@
 # postmark4j
 
+NOTE: meanwhile there is an official library from Postmarkapp, you should consider this instead: https://github.com/wildbit/postmark-java
+
 postmark4j is a community driven effort to work with the Postmarkapp REST API.
 It was initially created by Jared Holdcroft.
 
